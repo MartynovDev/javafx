@@ -22,10 +22,10 @@ public class GaussianDistributionHelper {
     public static double getGaussianDistribution(int ea, double d, double x){
         double rp = getRpByEa(ea);
         double deltaRp = getDeltaRpByRp(rp);
-        return (d / (Math.sqrt(2*Math.PI) * deltaRp)) * Math.exp(-Math.pow(x-rp, 2) / (2 * Math.pow(deltaRp, 2))) / getNMax(ea, d);
+        return (d / (Math.sqrt(2*Math.PI) * deltaRp)) * Math.exp(-Math.pow(x-rp, 2) / (2 * Math.pow(deltaRp, 2)));
     }
 
-    public static double getNMax(int ea, double d){
+    private static double getNMax(int ea, double d){
         double rp = getRpByEa(ea);
         double deltaRp = getDeltaRpByRp(rp);
         return (d / (Math.sqrt(2*Math.PI) * deltaRp));

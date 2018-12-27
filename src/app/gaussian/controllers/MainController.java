@@ -3,6 +3,7 @@ package app.gaussian.controllers;
 import app.gaussian.common.Environment;
 import app.gaussian.exception_handlers.TextFieldHandler;
 import app.gaussian.helpers.chart_helpers.DataSeriesHelper;
+import com.sun.xml.internal.ws.server.ServerRtException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,8 +15,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.text.Format;
 import java.util.IllegalFormatConversionException;
 import java.util.ResourceBundle;
 
@@ -54,12 +57,7 @@ public class MainController implements Initializable {
         yAxis.setTickLabelFormatter(new StringConverter<Number>() {
             @Override
             public String toString(Number object) {
-                String res = new DecimalFormat("#.##").format(object.doubleValue());
-                try {
-                    return String.format("%6.3e", res);
-                } catch (IllegalFormatConversionException e){
-                    return res;
-                }
+                return String.valueOf(object.doubleValue());
             }
 
             @Override
@@ -70,7 +68,7 @@ public class MainController implements Initializable {
         xAxis.setLabel(Environment.get().getChartXLabel());
     }
 
-    public void modelling(ActionEvent event){
+    public void modeling(ActionEvent event){
         double implantedDoseValue;
         try {
             implantedDoseValue = Double.valueOf(implantedDose.getText());
@@ -89,7 +87,6 @@ public class MainController implements Initializable {
             if (!flag){
                 lineChart.getData().add(dataSeries);
             }
-
         } catch (NumberFormatException e){
             TextFieldHandler.numberFormatExceptionHandler(implantedDoseLabel.getText());
         }
